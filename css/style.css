@@ -1,0 +1,318 @@
+/* =========================================================
+   다정한 침입 — 최현선 시집
+   "햇빛 드는 방의 얇은 시집" — 가볍고 섬세한 종이 톤
+   슬림한 종이 표지 · 큰 3D 플립북 · 시별 일러스트 · 중앙정렬 조판
+   본문 = Gowun Batang(고운바탕, 절대 변경 금지)
+   ========================================================= */
+
+:root {
+  /* ----- light, airy paper tones (subtle warm journey) ----- */
+  --bg:       #f4eee2;   /* 기본 크림 */
+  --bg-warm:  #f7f2e7;   /* 히어로 상 — 가장 환한 */
+  --bg-soft:  #efe7d8;   /* 책 섹션 / 히어로 하 — 살짝 깊은 크림 */
+  --bg-cool:  #eee9de;   /* 목차 — 미세하게 차분한 */
+  --bg-foot:  #ece4d3;   /* 푸터 */
+
+  /* ----- book leaf (slim paperback) ----- */
+  --paper:    #fbf7ee;   /* 종이 앞면 — 가장 밝게 (책이 살짝 떠 보이게) */
+  --paper-2:  #f5efe1;   /* 종이 뒷면/verso */
+
+  /* ----- ink on paper ----- */
+  --ink:    #39322a;     /* 본문/제목 */
+  --ink-2:  #6f6557;     /* 보조 */
+  --ink-3:  #a0967f;     /* 캡션/폴리오 */
+  --line:   #ddd1bd;     /* 헤어라인 */
+
+  /* ----- accent: 섬세한 와인-로즈 ----- */
+  --accent:      #a4584f;
+  --accent-soft: #c08a82;
+  --accent-deep: #7e4138;
+
+  /* ----- slim 종이 표지 (연한 블러시) ----- */
+  --cover-1:  #ecd9ce;
+  --cover-2:  #e1c7bc;
+  --cover-ink:#7a3f37;
+
+  --ribbon:  #b06a60;
+
+  --display: "Hahmlet", serif;
+  --serif:   "Gowun Batang", "Hahmlet", serif;
+  --mono:    "IBM Plex Mono", ui-monospace, monospace;
+
+  /* BIG book */
+  --page-w: clamp(300px, 43vw, 520px);
+  --page-h: calc(var(--page-w) * 1.4);
+
+  --ease: cubic-bezier(.22, .61, .36, 1);
+  --mask: cubic-bezier(.16, 1, .3, 1);
+  --flip: cubic-bezier(.6, .05, .3, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+/* keyboard focus ring (WCAG 2.4.7) */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+.ctrl:focus-visible { outline-offset: 4px; }
+.index-list__item:focus-visible { outline-offset: -2px; }
+.stage:focus-visible { outline-offset: 6px; }
+
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--serif); font-size: 19px; line-height: 1.8;
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-x: hidden;
+}
+::selection { background: rgba(164,88,79,.18); }
+a { color: inherit; text-decoration: none; }
+
+/* ---------- line-mask reveal ---------- */
+.mask { display: block; overflow: hidden; padding-bottom: .06em; }
+.mask__in { display: block; transform: translateY(112%); transition: transform 1.05s var(--mask); transition-delay: var(--d, 0s); }
+.reveal-lines.is-visible .mask__in, .preloader .mask__in, .hero.is-in .mask__in { transform: none; }
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity 1s var(--ease), transform 1s var(--ease); transition-delay: var(--d, 0s); }
+.reveal.is-visible { opacity: 1; transform: none; }
+
+/* ---------- preloader ---------- */
+.preloader { position: fixed; inset: 0; z-index: 999; background: var(--bg); display: grid; place-items: center; transition: opacity .9s var(--ease) .15s, visibility .9s .15s; overflow: hidden; }
+.preloader.is-hidden { opacity: 0; visibility: hidden; }
+.preloader__stars { display: none; }
+.preloader__title { position: relative; }
+.preloader__title .mask__in { font-family: var(--display); font-weight: 600; font-size: clamp(2rem,7vw,3.2rem); color: var(--ink); letter-spacing: .04em; }
+
+/* ---------- progress ---------- */
+.progress { position: fixed; top: 0; left: 0; height: 2px; width: 0; z-index: 400; background: linear-gradient(90deg, var(--accent), var(--accent-soft)); transition: width .1s linear; }
+
+/* ===================== NAV ===================== */
+.nav { position: fixed; inset: 0 0 auto 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.5rem clamp(1.3rem,5vw,4rem); transition: background .5s var(--ease), padding .5s var(--ease), box-shadow .5s var(--ease); }
+.nav.is-scrolled { background: rgba(247,242,231,.82); backdrop-filter: blur(12px) saturate(120%); -webkit-backdrop-filter: blur(12px) saturate(120%); padding-top: 1rem; padding-bottom: 1rem; box-shadow: 0 1px 0 rgba(57,50,42,.08); }
+.brand { font-family: var(--display); font-weight: 700; font-size: 1.2rem; letter-spacing: .01em; color: var(--ink); }
+.nav__links { display: flex; gap: clamp(1.2rem,2.6vw,2.6rem); }
+.nav__links a { position: relative; display: flex; flex-direction: column; align-items: center; gap: .05rem; padding: .2rem 0; }
+.nav__links a span { font-size: .98rem; color: var(--ink); transition: color .3s var(--ease); }
+.nav__links a i { font-family: var(--mono); font-style: normal; font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); }
+.nav__links a::after { content: ""; position: absolute; left: 50%; bottom: -2px; height: 1px; width: 0; background: var(--accent); transition: width .35s var(--ease), left .35s var(--ease); }
+.nav__links a:hover span { color: var(--accent); }
+.nav__links a:hover::after { width: 100%; left: 0; }
+.nav__toggle { display: none; flex-direction: column; gap: 5px; background: none; border: 0; padding: 8px; z-index: 101; }
+.nav__toggle span { width: 24px; height: 1.5px; background: var(--ink); transition: .3s var(--ease); }
+.nav__toggle[aria-expanded="true"] span:first-child { transform: translateY(6.5px) rotate(45deg); }
+.nav__toggle[aria-expanded="true"] span:last-child { transform: translateY(-6px) rotate(-45deg); }
+
+/* ===================== HERO ===================== */
+.hero { position: relative; min-height: 100svh; display: flex; align-items: center; padding: 8rem clamp(1.3rem,7vw,6rem) 6rem; overflow: hidden;
+  background: linear-gradient(165deg, var(--bg-warm) 0%, var(--bg-soft) 100%); }
+.hero__glow { position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(54% 50% at 84% 24%, rgba(164,88,79,.10), transparent 60%),
+              radial-gradient(40% 38% at 88% 14%, rgba(255,250,242,.5), transparent 60%); }
+.hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 20%; z-index: 1; pointer-events: none;
+  background: linear-gradient(to bottom, transparent, var(--bg-soft)); }
+.hero__art { position: absolute; right: clamp(-1rem,2vw,4rem); top: 50%; transform: translateY(-50%); width: clamp(240px,34vw,460px); color: var(--accent); opacity: .5; z-index: 0; pointer-events: none; }
+.hero__art svg { width: 100%; height: auto; display: block; }
+@keyframes heroDraw { from { stroke-dashoffset: 1000; } to { stroke-dashoffset: 0; } }
+.hero__art svg > path { stroke-dasharray: 1000; animation: heroDraw 2.8s var(--ease) .4s both; }
+.hero__inner { position: relative; z-index: 2; max-width: 1100px; width: 100%; margin: 0 auto; }
+.hero__meta { font-family: var(--mono); font-size: .8rem; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.6rem; }
+.hero__title { font-family: var(--display); font-weight: 700; font-size: clamp(3.6rem,14vw,10rem); line-height: .96; letter-spacing: -.005em; color: var(--ink); text-wrap: balance; }
+.hero__sub { font-family: var(--display); font-weight: 500; font-size: clamp(1.3rem,3.4vw,2rem); color: var(--accent); margin-top: 1.5rem; text-wrap: balance; }
+.hero__foot { display: flex; flex-wrap: wrap; align-items: center; gap: 1.6rem 2.6rem; margin-top: 2.6rem; }
+.hero__by { font-family: var(--serif); font-size: 1.28rem; color: var(--ink); letter-spacing: .02em; }
+.hero__by .lab { font-family: var(--mono); font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); margin-right: .7rem; }
+.hero__cta { display: inline-flex; align-items: center; gap: 1.1rem; font-family: var(--display); font-weight: 500; font-size: 1.12rem; color: var(--ink); }
+.hero__cta-txt { position: relative; }
+.hero__cta-txt::after { content: ""; position: absolute; left: 0; bottom: -4px; height: 1px; width: 0; background: var(--accent); transition: width .5s var(--mask); }
+.hero__cta:hover .hero__cta-txt { color: var(--accent); }
+.hero__cta:hover .hero__cta-txt::after { width: 100%; }
+.hero__cta-arrow { display: grid; place-items: center; width: 2.7rem; height: 2.7rem; border: 1px solid var(--line); border-radius: 50%; color: var(--accent); transition: background .45s var(--ease), border-color .45s var(--ease), color .45s var(--ease); animation: ctaBob 2.6s var(--ease) infinite; }
+.hero__cta-arrow svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.hero__cta:hover .hero__cta-arrow { background: var(--accent); border-color: var(--accent); color: var(--paper); }
+@keyframes ctaBob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+
+/* ===================== ILLUSTRATIONS ===================== */
+.ill { color: var(--accent); }
+.ill svg { display: block; width: auto; height: 100%; margin: 0 auto; overflow: visible; }
+
+/* ===================== SECTION HEAD ===================== */
+.shead { display: flex; align-items: baseline; justify-content: center; gap: 1rem; max-width: 1140px; margin: 0 auto clamp(2.6rem,6vw,4rem); padding: 0 clamp(1.3rem,5vw,2rem); position: relative; z-index: 3; }
+.shead__no { font-family: var(--mono); font-size: .9rem; color: var(--accent); }
+.shead__title { font-family: var(--display); font-weight: 700; font-size: clamp(1.9rem,5vw,3rem); letter-spacing: .01em; color: var(--ink); text-wrap: balance; }
+.shead__cap { font-family: var(--mono); font-size: .74rem; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+
+/* ===================== THE BOOK ===================== */
+.book-section { position: relative; padding: clamp(3.5rem,8vw,6rem) 0 clamp(3rem,6vw,4.5rem); overflow: hidden;
+  background: radial-gradient(120% 78% at 50% 46%, #fbf7ee 0%, var(--bg-soft) 58%, var(--bg-soft) 100%); }
+.book-amb { position: absolute; left: 50%; top: 48%; transform: translate(-50%,-50%); width: min(1100px,98vw); height: 860px; pointer-events: none; z-index: 1;
+  background: radial-gradient(circle, rgba(255,253,247,.7) 0%, rgba(255,253,247,.25) 36%, transparent 64%); }
+.book-stars { display: none; }
+
+.stage { position: relative; z-index: 2; display: flex; justify-content: center; align-items: center; padding: clamp(1rem,3vw,2.4rem) 1rem clamp(2rem,4vw,3rem); perspective: 3000px; perspective-origin: 50% 42%; }
+.book { position: relative; width: calc(var(--page-w) * 2); height: var(--page-h); transform-style: preserve-3d; transition: transform .9s var(--ease); }
+.book.is-closed { transform: translateX(calc(var(--page-w) / -2)); }
+.book.is-end { transform: translateX(calc(var(--page-w) / 2)); }
+.book.no-anim, .book.no-anim .leaf { transition: none !important; }
+/* slim paperback — soft light shadow */
+.book__shadow { position: absolute; left: 3%; right: 3%; bottom: -3.5%; height: 7%; z-index: 0; background: radial-gradient(56% 100% at 50% 0, rgba(90,62,36,.22), transparent 72%); filter: blur(11px); }
+/* thin fore-edge (slim volume) */
+.book::after { content: ""; position: absolute; left: 2.5%; right: 2.5%; bottom: -4px; height: 7px; z-index: 0; border-radius: 0 0 2px 2px;
+  background: repeating-linear-gradient(90deg, #f4eddd 0 1.5px, #e4d6be 1.5px 3px);
+  box-shadow: 0 7px 16px -8px rgba(80,55,30,.4); opacity: 1; transition: opacity .5s var(--ease); }
+.book.is-closed::after, .book.is-end::after { opacity: 0; }
+.book__gutter { position: absolute; top: 0; bottom: 0; left: 50%; width: 52px; transform: translateX(-26px); z-index: 40; pointer-events: none; opacity: 1; transition: opacity .6s var(--ease);
+  background: linear-gradient(90deg, rgba(90,62,36,0), rgba(90,62,36,.09) 46%, rgba(90,62,36,.15) 50%, rgba(90,62,36,.09) 54%, rgba(90,62,36,0)); }
+.book.is-closed .book__gutter, .book.is-end .book__gutter { opacity: 0; }
+
+/* ----- 가름끈 (ribbon) — 슬림한 와인 실크 마커 ----- */
+.ribbon { position: absolute; top: -4px; left: 50%; width: 7px; height: calc(100% + 22px); z-index: 41; pointer-events: none;
+  transform: translateX(4px);
+  background: linear-gradient(90deg, #8e4a41 0%, #b87167 50%, #8e4a41 100%);
+  box-shadow: inset -1px 0 0 rgba(255,255,255,.35), inset 1px 0 0 rgba(0,0,0,.12), 1px 1px 4px rgba(80,50,40,.3);
+  transition: opacity .45s var(--ease); }
+.ribbon::after { content: ""; position: absolute; left: 0; right: 0; bottom: -9px; height: 11px;
+  background: linear-gradient(90deg, #8e4a41, #b87167 50%, #8e4a41);
+  clip-path: polygon(0 0, 100% 0, 50% 100%); }
+.book.is-closed .ribbon, .book.is-end .ribbon { opacity: 0; }
+
+.leaf { position: absolute; top: 0; left: 50%; width: var(--page-w); height: 100%; transform-origin: left center; transform-style: preserve-3d; transition: transform 1.05s var(--flip); will-change: transform; }
+.leaf.is-flipped { transform: rotateY(-180deg); }
+@keyframes turnShadow { 0%,100% { box-shadow: inset 0 0 60px rgba(130,95,50,.05); } 42% { box-shadow: inset 0 0 60px rgba(130,95,50,.05), 0 22px 40px -16px rgba(80,55,30,.32); } }
+.leaf.is-turning .leaf__face--front:not(.leaf__face--cover) { animation: turnShadow 1.05s var(--flip); }
+.leaf__face { position: absolute; inset: 0; overflow: hidden; -webkit-backface-visibility: hidden; backface-visibility: hidden; background: var(--paper); display: flex; flex-direction: column; padding: clamp(1.9rem,3.4vw,3rem) clamp(1.8rem,3.2vw,2.8rem); box-shadow: inset 0 0 60px rgba(130,95,50,.05); color: var(--ink); }
+.leaf__face--front { z-index: 2; }
+.leaf__face--back { transform: rotateY(180deg); background: var(--paper-2); }
+/* gutter 음영 (종이면) */
+.leaf__face--front::before, .leaf__face--back::before { content: ""; position: absolute; top: 0; bottom: 0; width: 13%; pointer-events: none; z-index: 5; }
+.leaf__face--front::before { left: 0; background: linear-gradient(90deg, rgba(90,65,35,.08), transparent); }
+.leaf__face--back::before { right: 0; background: linear-gradient(270deg, rgba(90,65,35,.08), transparent); }
+.leaf__face--cover::before, .leaf__face--endpaper::before { display: none; }
+
+.pg-no { margin-top: auto; padding-top: 1rem; text-align: center; font-family: var(--mono); color: var(--ink-3); font-size: .74rem; flex: none; }
+.pg-body { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+
+/* poem — 중앙 정렬 클래식 조판 */
+.poem { display: flex; flex-direction: column; align-items: center; text-align: center; min-height: 0; flex: 1; }
+.poem .ill { height: clamp(84px,13vh,132px); margin-bottom: 1.1rem; flex: none; opacity: .95; color: var(--accent); text-align: center; }
+.poem__head { display: flex; flex-direction: column; align-items: center; gap: .55rem; margin-bottom: 1.4rem; flex: none; }
+.poem__num { font-family: var(--mono); color: var(--accent); font-size: .76rem; letter-spacing: .08em; }
+.poem__title { font-family: var(--display); font-weight: 700; font-size: clamp(1.5rem,3.2vw,2.1rem); line-height: 1.2; color: var(--ink); text-wrap: balance; }
+.poem__rule { display: none; }
+.poem__title::after { content: ""; display: block; width: 2.2rem; height: 1.5px; background: var(--accent); margin: .9rem auto 0; }
+/* 시 본문 — Gowun Batang, line-height 2.0 (절대 변경 금지) */
+.poem__body { font-family: var(--serif); font-size: clamp(1.04rem,2.2vw,1.24rem); line-height: 2; letter-spacing: 0; color: var(--ink); text-align: center; overflow: hidden; min-height: 0; flex: 1; }
+.poem__body .st { margin: 0 0 1.05em; }
+.poem__body .st:last-child { margin-bottom: 0; }
+
+/* verso — 실제 책처럼 비움 */
+.verso { align-items: center; justify-content: center; }
+
+/* ----- cover & back cover — 감성 시집 표지: 틀 없이 열린, 그림 한 점 중심 ----- */
+.leaf__face--cover { color: var(--cover-ink); align-items: center; justify-content: center; text-align: center; box-shadow: inset 0 0 90px rgba(150,105,85,.06);
+  background:
+    radial-gradient(92% 62% at 50% 12%, rgba(255,252,247,.6), transparent 62%),
+    linear-gradient(168deg, #f1e3d6 0%, #e8cfc3 100%); }
+.cover__no { position: absolute; top: 40px; left: 0; right: 0; font-family: var(--mono); font-size: .66rem; letter-spacing: .52em; color: rgba(122,63,55,.6); }
+.cover__ill { width: 136px; height: 136px; margin: 0 auto 1.7rem; opacity: .97; }
+.cover__title { font-family: var(--display); font-weight: 600; font-size: clamp(1.7rem,4.6vw,2.3rem); line-height: 1.22; letter-spacing: .05em; color: var(--cover-ink); text-wrap: balance; }
+.cover__rule { width: 24px; height: 1px; background: rgba(126,65,56,.42); margin: 1rem auto; }
+.cover__sub { font-family: var(--serif); color: rgba(122,63,55,.74); font-size: .98rem; letter-spacing: .03em; }
+.cover__by { position: absolute; bottom: 40px; left: 0; right: 0; font-family: var(--mono); font-size: .72rem; letter-spacing: .16em; color: rgba(122,63,55,.7); }
+
+/* ----- back cover ----- */
+.backcover__emblem { width: 40px; height: 40px; margin-bottom: 1.6rem; color: var(--accent); opacity: .82; }
+.backcover__emblem svg { width: 100%; height: 100%; }
+.backcover__line { font-family: var(--serif); font-size: clamp(1rem,2.4vw,1.16rem); line-height: 1.95; color: var(--cover-ink); letter-spacing: .02em; text-wrap: balance; max-width: 80%; }
+.backcover__no { position: absolute; bottom: 38px; left: 0; right: 0; font-family: var(--mono); font-size: .72rem; letter-spacing: .2em; color: rgba(122,63,55,.62); }
+
+/* ----- endpaper (면지) — 연한 블러시 패턴지 ----- */
+.leaf__face--endpaper {
+  background-color: #ecdccd;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(164,88,79,.09) 0 1px, transparent 1px 15px),
+    repeating-linear-gradient(-45deg, rgba(164,88,79,.09) 0 1px, transparent 1px 15px);
+  box-shadow: inset 0 0 70px rgba(150,100,80,.1); }
+
+/* title page (속표지) */
+.titlepage { align-items: center; justify-content: center; text-align: center; }
+.titlepage__ill { width: 74px; height: 74px; color: var(--accent); margin: 0 auto 1.4rem; opacity: .85; }
+.titlepage__title { font-family: var(--display); font-weight: 700; font-size: clamp(2rem,6vw,2.7rem); line-height: 1.14; color: var(--ink); text-wrap: balance; }
+.titlepage__rule { width: 40px; height: 1px; background: var(--accent); margin: 1.2rem auto; }
+.titlepage__sub { font-family: var(--serif); color: var(--ink-2); }
+.titlepage__by { margin-top: 2.2rem; font-family: var(--mono); font-size: .8rem; letter-spacing: .08em; color: var(--ink-2); }
+
+/* contents (목차 leaf) */
+.toc__title { font-family: var(--display); font-weight: 700; font-size: 1.5rem; text-align: center; margin-bottom: 1.6rem; color: var(--ink); }
+.toc__list { list-style: none; font-size: 1.02rem; }
+.toc__item { display: flex; align-items: baseline; gap: .6rem; padding: .55rem 0; transition: color .25s var(--ease); color: var(--ink-2); cursor: pointer; }
+.toc__item:hover { color: var(--accent); }
+.toc__num { font-family: var(--mono); color: var(--accent); font-size: .74rem; width: 2rem; flex: none; }
+.toc__name { font-family: var(--serif); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.toc__dots { flex: 1; border-bottom: 1px dotted var(--line); transform: translateY(-3px); }
+.toc__pg { font-family: var(--mono); font-size: .74rem; color: var(--ink-3); flex: none; }
+
+/* ===================== CONTROLS ===================== */
+.controls { position: relative; z-index: 3; display: flex; align-items: center; justify-content: center; gap: clamp(1.6rem,4vw,2.6rem); margin-top: 1.4rem; }
+.ctrl { position: relative; width: 3.5rem; height: 3.5rem; border-radius: 50%; border: 1px solid var(--line); background: rgba(255,255,255,.5); color: var(--accent); cursor: pointer; display: grid; place-items: center; overflow: hidden; transition: border-color .5s var(--ease), color .5s var(--ease), box-shadow .5s var(--ease), transform .5s var(--ease); }
+.ctrl::before { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--accent); transform: scale(0); opacity: 0; transition: transform .55s var(--mask), opacity .4s var(--ease); }
+.ctrl svg { position: relative; z-index: 1; width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; transition: transform .5s var(--mask); }
+.ctrl:hover:not(:disabled) { color: var(--paper); border-color: var(--accent); box-shadow: 0 14px 30px -14px rgba(164,88,79,.5); transform: translateY(-2px); }
+.ctrl:hover:not(:disabled)::before { transform: scale(1); opacity: 1; }
+.ctrl--prev:hover:not(:disabled) svg { transform: translateX(-3px); }
+.ctrl--next:hover:not(:disabled) svg { transform: translateX(3px); }
+.ctrl:disabled { opacity: .3; cursor: default; }
+.controls__meta { min-width: 13rem; text-align: center; }
+.controls__meta .ind__label { font-family: var(--serif); font-size: 1.06rem; color: var(--ink); }
+.controls__meta .ind__pg { font-family: var(--mono); font-size: .76rem; color: var(--accent); margin-left: .6rem; letter-spacing: .04em; }
+
+/* ===================== INDEX ===================== */
+.index-section { position: relative; padding: clamp(4rem,9vw,7rem) 0; background: var(--bg-cool); }
+.index-list { position: relative; z-index: 2; max-width: 1000px; margin: 0 auto; padding: 0 clamp(1.3rem,5vw,2rem); list-style: none; }
+.index-list__item { display: flex; align-items: center; gap: clamp(1rem,3vw,2rem); padding: 1.4rem 0; border-top: 1px solid var(--line); cursor: pointer; transition: color .35s var(--ease); color: var(--ink); }
+.index-list__item:last-child { border-bottom: 1px solid var(--line); }
+.index-list__item:hover { color: var(--accent); }
+.index-list__item:hover .index-list__ill { transform: translateX(6px) rotate(-2deg); color: var(--accent); }
+.index-list__item:hover .index-list__name { transform: translateX(8px); }
+.index-list__num { font-family: var(--mono); color: var(--accent); font-size: .82rem; width: 2rem; flex: none; }
+.index-list__ill { width: 84px; height: 56px; flex: none; color: var(--ill, var(--accent-soft)); transition: transform .45s var(--mask), color .35s var(--ease); }
+.index-list__ill svg { width: 100%; height: 100%; }
+.index-list__name { font-family: var(--display); font-weight: 600; font-size: clamp(1.3rem,4vw,2.1rem); transition: transform .45s var(--mask); text-wrap: balance; }
+.index-list__dots { flex: 1; }
+.index-list__pg { font-family: var(--mono); font-size: .78rem; color: var(--ink-3); flex: none; }
+
+/* ===================== AUTHOR + COLOPHON ===================== */
+.author { position: relative; overflow: hidden; padding: clamp(4rem,9vw,7rem) 0 clamp(5rem,10vw,8rem); background: var(--bg); }
+.author__inner { position: relative; z-index: 2; max-width: 620px; margin: 0 auto; text-align: center; padding: 0 clamp(1.3rem,5vw,2rem); }
+.author__name { font-family: var(--display); font-weight: 700; font-size: clamp(2.4rem,7vw,3.4rem); color: var(--ink); text-wrap: balance; }
+.author__note { font-family: var(--serif); font-size: 1.14rem; line-height: 2.1; color: var(--ink-2); margin-top: 1.6rem; }
+.author__rule { display: block; width: 40px; height: 1px; background: var(--accent); opacity: .6; margin: 2.4rem auto 1.8rem; }
+.author__colophon { font-family: var(--mono); font-size: .82rem; line-height: 2; letter-spacing: .05em; color: var(--ink-3); }
+.author__colophon span { color: var(--accent); }
+
+/* ===================== FOOTER ===================== */
+.footer { position: relative; text-align: center; padding: clamp(2.6rem,5vw,3.6rem) 1.5rem 2.6rem; background: var(--bg-foot); }
+.footer::before { content: ""; position: absolute; left: 50%; top: 0; transform: translateX(-50%); width: min(680px,86%); height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(164,88,79,.4), transparent); }
+.footer__line { color: var(--ink-2); font-size: .98rem; letter-spacing: .02em; }
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 860px) {
+  .hero__art { opacity: .16; right: 50%; transform: translate(50%,-50%); width: 80vw; }
+}
+@media (max-width: 760px) {
+  .nav__links { position: fixed; inset: 0 0 0 auto; width: min(78vw,320px); flex-direction: column; justify-content: center; gap: 2rem; padding: 2rem; background: rgba(247,242,231,.97); backdrop-filter: blur(16px); transform: translateX(100%); transition: transform .5s var(--ease); }
+  .nav__links.is-open { transform: translateX(0); }
+  .nav__toggle { display: flex; }
+  .nav__links a { flex-direction: row; gap: .5rem; align-items: baseline; }
+  :root { --page-w: min(88vw,420px); }
+  .stage { overflow: hidden; }
+  .book { width: var(--page-w); }
+  .book, .book.is-closed, .book.is-end { transform: none; }
+  .leaf { left: 0; }
+  .book__gutter { display: none; }
+  .ribbon { display: none; }
+  .leaf__face--front::before { background: linear-gradient(90deg, rgba(90,65,35,.05), transparent); }
+  .index-list__ill { width: 58px; height: 40px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  html { scroll-behavior: auto; }
+  .reveal, .mask__in { opacity: 1 !important; transform: none !important; }
+  .ribbon { transition: none !important; }
+}

@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>다정한 침입 — 최현선 시집</title>
+  <meta name="description" content="다정한 침입 — 최현선 시집. 끝난 줄 알면서도 차마 끝내지 못한 문장들." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400&family=Hahmlet:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- PRELOADER — 자정의 첫 호흡 -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader__stars" aria-hidden="true"></div>
+    <div class="preloader__title"><span class="mask"><span class="mask__in">다정한 침입</span></span></div>
+  </div>
+
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <header class="nav" id="nav">
+    <a href="#top" class="brand">다정한 침입</a>
+    <nav class="nav__links" aria-label="주요 메뉴">
+      <a href="#book"><span>시</span><i>poems</i></a>
+      <a href="#index"><span>목차</span><i>index</i></a>
+      <a href="#author"><span>지은이</span><i>poet</i></a>
+    </nav>
+    <button class="nav__toggle" id="navToggle" aria-label="메뉴 열기" aria-expanded="false"><span></span><span></span></button>
+  </header>
+
+  <!-- HERO — 황혼 -->
+  <section class="hero" id="top">
+    <div class="hero__glow" aria-hidden="true"></div>
+    <div class="hero__art" id="heroArt" data-par="0.1" aria-hidden="true"></div>
+    <div class="hero__inner">
+      <p class="hero__meta reveal">시집 · 詩集</p>
+      <h1 class="hero__title reveal-lines">
+        <span class="mask"><span class="mask__in" style="--d:.05s">다정한</span></span>
+        <span class="mask"><span class="mask__in" style="--d:.18s">침입</span></span>
+      </h1>
+      <p class="hero__sub reveal" style="--d:.45s">속수무책의 성실</p>
+      <div class="hero__foot reveal" style="--d:.6s">
+        <p class="hero__by"><span class="lab">지은이</span>최현선</p>
+        <a href="#book" class="hero__cta" data-open-book>
+          <span class="hero__cta-txt">책을 펼치다</span>
+          <span class="hero__cta-arrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 V19 M6 13 L12 19.5 L18 13"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE BOOK — 자정 -->
+  <section class="book-section" id="book">
+    <div class="book-amb" aria-hidden="true"></div>
+    <div class="book-stars" id="bookStars" aria-hidden="true"></div>
+    <div class="shead shead--dark reveal">
+      <span class="shead__no">01</span>
+      <h2 class="shead__title">시</h2>
+      <span class="shead__cap">the poems</span>
+      <span class="shead__rule"></span>
+    </div>
+
+    <div class="stage" id="stage" role="region" aria-label="시집 펼침면 (좌우 화살표 또는 버튼으로 넘김)" tabindex="0">
+      <div class="book is-closed" id="book-el">
+        <div class="book__shadow"></div>
+        <div class="ribbon" id="ribbon" aria-hidden="true"></div>
+        <div class="book__gutter"></div>
+      </div>
+    </div>
+
+    <div class="controls" id="controls">
+      <button class="ctrl ctrl--prev" id="prevBtn" aria-label="이전 페이지" disabled>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 L8 12 L15 20"/></svg>
+      </button>
+      <p class="controls__meta" id="indicator" aria-live="polite">표지</p>
+      <button class="ctrl ctrl--next" id="nextBtn" aria-label="다음 페이지">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4 L16 12 L9 20"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- INDEX — 여명 직전 -->
+  <section class="index-section" id="index">
+    <div class="shead shead--dark reveal">
+      <span class="shead__no">02</span>
+      <h2 class="shead__title">목차</h2>
+      <span class="shead__cap">the index</span>
+      <span class="shead__rule"></span>
+    </div>
+    <ol class="index-list reveal" id="indexList" aria-label="목차"></ol>
+  </section>
+
+  <!-- AUTHOR + COLOPHON — 새벽 -->
+  <section class="author" id="author">
+    <div class="shead shead--dark reveal">
+      <span class="shead__no">03</span>
+      <h2 class="shead__title">지은이</h2>
+      <span class="shead__cap">the poet</span>
+      <span class="shead__rule"></span>
+    </div>
+    <div class="author__inner reveal">
+      <p class="author__name">최현선</p>
+      <p class="author__note">
+        오래 앓아야만 비로소 선명해지는 것들이 있다.
+        이 시집은 그 더딘 계절들의 기록이다.
+        끝난 줄 알면서도 차마 끝내지 못한 문장들을,
+        이제 당신에게 건넨다.
+      </p>
+      <span class="author__rule"></span>
+      <p class="author__colophon">시집 · 詩集 &nbsp;/&nbsp; <span>No.01</span></p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p class="footer__line">한 줄의 시가 당신에게 닿기를.</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

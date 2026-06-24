@@ -1,0 +1,14 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+
+# Dependencies / logs (미사용이지만 안전하게)
+node_modules/
+*.log
+
+# Vercel CLI
+.vercel
