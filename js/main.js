@@ -153,7 +153,7 @@
 
   /* 뒤표지 — 앞표지와 동일한 클로스, 제목/지은이 반복 금지. 박 시구 한 줄 + No.01 */
   const backCoverFront = () =>
-    '<div class="ill backcover__emblem">' + ILLUS.emblem() + "</div>" +
+    '<div class="ill backcover__emblem">' + ILLUS.coverArt() + "</div>" +
     '<p class="backcover__line">오래도록, 기꺼이<br>앓기 위함이었다.</p>';
 
   const titleFront = () =>

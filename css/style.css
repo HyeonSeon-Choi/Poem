@@ -49,7 +49,7 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 
 /* keyboard focus ring (WCAG 2.4.7) */
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
@@ -216,7 +216,7 @@ a { color: inherit; text-decoration: none; }
 .cover__by { position: absolute; bottom: 40px; left: 0; right: 0; font-family: var(--mono); font-size: .72rem; letter-spacing: .16em; color: rgba(122,63,55,.7); }
 
 /* ----- back cover ----- */
-.backcover__emblem { width: 40px; height: 40px; margin-bottom: 1.6rem; color: var(--accent); opacity: .82; }
+.backcover__emblem { width: 104px; height: 104px; margin: 0 auto 1.5rem; opacity: .92; }
 .backcover__emblem svg { width: 100%; height: 100%; }
 .backcover__line { font-family: var(--serif); font-size: clamp(1rem,2.4vw,1.16rem); line-height: 1.95; color: var(--cover-ink); letter-spacing: .02em; text-wrap: balance; max-width: 80%; }
 .backcover__no { position: absolute; bottom: 38px; left: 0; right: 0; font-family: var(--mono); font-size: .72rem; letter-spacing: .2em; color: rgba(122,63,55,.62); }
@@ -300,15 +300,19 @@ a { color: inherit; text-decoration: none; }
   .nav__links.is-open { transform: translateX(0); }
   .nav__toggle { display: flex; }
   .nav__links a { flex-direction: row; gap: .5rem; align-items: baseline; }
-  :root { --page-w: min(88vw,420px); }
-  .stage { overflow: hidden; }
-  .book { width: var(--page-w); }
+  :root { --page-w: min(85vw,380px); }
+  .stage { overflow: hidden; padding-left: 0; padding-right: 0; }
+  .book { width: var(--page-w); margin: 0 auto; }
   .book, .book.is-closed, .book.is-end { transform: none; }
   .leaf { left: 0; }
   .book__gutter { display: none; }
   .ribbon { display: none; }
   .leaf__face--front::before { background: linear-gradient(90deg, rgba(90,65,35,.05), transparent); }
   .index-list__ill { width: 58px; height: 40px; }
+  /* 컨트롤이 화면 밖으로 잘리지 않게 */
+  .controls { gap: 1.1rem; padding: 0 .8rem; }
+  .controls__meta { min-width: 0; font-size: .9rem; }
+  .ctrl { width: 3rem; height: 3rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
