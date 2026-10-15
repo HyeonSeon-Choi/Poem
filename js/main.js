@@ -463,19 +463,58 @@
   window.addEventListener("load", () => setTimeout(hidePre, reduceMotion ? 0 : 600));
   setTimeout(hidePre, reduceMotion ? 400 : 2000);
 
-  /* ------------------------------------------------------ fit each poem to its page (no scroll) */
+  /* ------------------------------------------------------ fit each poem to its page */
   function fitPoems() {
     bookEl.querySelectorAll(".poem__body").forEach((el) => {
+      el.classList.remove("is-scroll", "at-end");
       el.style.fontSize = "";
       el.style.lineHeight = "";
+      const stanzas = el.querySelectorAll(".st");
+      stanzas.forEach((st) => (st.style.marginBottom = ""));
+
       let fs = parseFloat(getComputedStyle(el).fontSize);
       let g = 0;
-      /* 1차: 폰트 축소 (하한 11.5px) */
-      while (el.scrollHeight > el.clientHeight + 1 && fs > 11.5 && g < 80) { fs -= 0.5; el.style.fontSize = fs + "px"; g++; }
-      /* 2차: 그래도 넘치면 행간을 2.0→1.7까지 축소 (Gowun Batang 가독성 하한 1.7) */
+      /* 1차: 폰트 축소 (하한 11px) */
+      while (el.scrollHeight > el.clientHeight + 1 && fs > 11 && g < 80) {
+        fs -= 0.5;
+        el.style.fontSize = fs + "px";
+        g++;
+      }
+      /* 2차: 행간 축소 (2.0 → 1.65까지) */
       if (el.scrollHeight > el.clientHeight + 1) {
         let lh = 2.0, g2 = 0;
-        while (el.scrollHeight > el.clientHeight + 1 && lh > 1.7 && g2 < 12) { lh -= 0.05; el.style.lineHeight = lh.toFixed(2); g2++; }
+        while (el.scrollHeight > el.clientHeight + 1 && lh > 1.65 && g2 < 12) {
+          lh -= 0.05;
+          el.style.lineHeight = lh.toFixed(2);
+          g2++;
+        }
+      }
+      /* 3차: 연(stanza) 사이 간격 미세 축소 (1.05em → 0.6em까지) */
+      if (el.scrollHeight > el.clientHeight + 1 && stanzas.length > 1) {
+        let mb = 1.05, g3 = 0;
+        while (el.scrollHeight > el.clientHeight + 1 && mb > 0.6 && g3 < 10) {
+          mb -= 0.1;
+          const val = mb.toFixed(2) + "em";
+          stanzas.forEach((st, idx) => {
+            if (idx < stanzas.length - 1) st.style.marginBottom = val;
+          });
+          g3++;
+        }
+      }
+      /* 4차 (최종 안전망): 극단적으로 작은 모바일 화면에서도 글이 절대 잘리지 않도록 스크롤 허용 */
+      if (el.scrollHeight > el.clientHeight + 1) {
+        el.classList.add("is-scroll");
+        const onScroll = () => {
+          if (el.scrollTop + el.clientHeight >= el.scrollHeight - 6) {
+            el.classList.add("at-end");
+          } else {
+            el.classList.remove("at-end");
+          }
+        };
+        if (el._scrollHandler) el.removeEventListener("scroll", el._scrollHandler);
+        el._scrollHandler = onScroll;
+        el.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
       }
     });
   }
