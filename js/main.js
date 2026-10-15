@@ -93,18 +93,31 @@
       '<path d="M156 116 c7 -10 18 -4 15 5 c-8 3 -13 0 -15 -5 z" opacity="0.45"/>' +
       '<path d="M114 88 q2 8 0 14" stroke-dasharray="1.5 6" opacity="0.4"/>' +
       '<path d="M158 98 q2 9 0 16" stroke-dasharray="1.5 6" opacity="0.35"/>'),
-    /* 접힌 면 — 접어 둔 종이의 안쪽과 마른 잉크 선 */
+    /* 접힌 면 — 책 모서리가 접힌 모습과 겹겹의 책장, 마른 잉크 */
     folded: () => svg("0 0 280 150",
-      '<path d="M84 38 H166 L196 68 V114 H84 Z" opacity="0.85"/>' +
-      '<polygon points="166,38 166,68 196,68" fill="currentColor" fill-opacity="0.08" stroke="none"/>' +
-      '<path d="M166 38 V68 H196" opacity="0.85"/>' +
-      '<line x1="166" y1="38" x2="196" y2="68" stroke-dasharray="1.5 5" opacity="0.45"/>' +
-      '<line x1="140" y1="38" x2="140" y2="114" stroke-dasharray="1.5 6" opacity="0.35"/>' +
-      '<path d="M104 60 C118 59 136 61 148 60" opacity="0.7"/>' +
-      '<path d="M104 74 C122 75 142 73 158 74" opacity="0.6"/>' +
-      '<path d="M104 88 C116 87 128 89 136 88" opacity="0.5"/>' +
-      dot(166, 68, 1.8) + dot(140, 88, 1.4) +
-      '<path d="M70 122 C115 118 165 118 210 122" stroke-dasharray="1.5 5" opacity="0.25"/>'),
+      /* 원래 모서리의 잔상(점선)과 모서리가 접힌 자국(사선 접힘선) */
+      '<path d="M170 42 Q214 36 216 78" stroke-dasharray="2 5" opacity="0.28"/>' +
+      '<path d="M170 42 Q194 62 216 78" stroke-dasharray="1.5 4" opacity="0.5"/>' +
+      '<path d="M170 42 Q194 62 216 78 Q202 48 170 42 Z" fill="currentColor" fill-opacity="0.05" stroke="none"/>' +
+      /* 접혀 내려온 책 모서리 (dog-ear flap) */
+      '<path d="M170 42 C162 54 160 66 164 76 C178 80 198 80 216 78 Z" fill="currentColor" fill-opacity="0.09" stroke="none"/>' +
+      '<path d="M170 42 C162 54 160 66 164 76 C178 80 198 80 216 78" opacity="0.9"/>' +
+      /* 책장 본면의 윤곽 */
+      '<path d="M64 42 C100 40 135 41 170 42 M216 78 C218 92 217 105 214 116 C164 118 114 117 64 116 C61 92 61 66 64 42" opacity="0.85"/>' +
+      /* 아래로 포개진 책장의 두께감과 단면 */
+      '<path d="M68 120 C116 122 166 122 217 120 C220 108 221 95 219 84" opacity="0.4"/>' +
+      '<path d="M72 124 C118 126 168 126 220 124 C222 114 223 103 221 92" opacity="0.22"/>' +
+      '<path d="M76 128 C120 130 170 130 223 128" opacity="0.12"/>' +
+      /* 페이지 위의 마른 잉크 시구 */
+      '<path d="M88 64 C110 63 130 65 146 64" opacity="0.65"/>' +
+      '<path d="M88 77 C112 76 134 78 152 77" opacity="0.55"/>' +
+      '<path d="M88 90 C106 91 122 89 136 90" opacity="0.45"/>' +
+      '<path d="M88 102 C102 103 114 101 124 102" opacity="0.35"/>' +
+      /* 접힌 틈새 안쪽에 희미하게 남은 잉크 흔적 */
+      '<path d="M182 58 C190 57 198 59 204 58" opacity="0.32" stroke-dasharray="1.5 3"/>' +
+      '<path d="M188 67 C194 66 200 68 206 67" opacity="0.25" stroke-dasharray="1.5 3"/>' +
+      /* 손끝에 걸리는 모서리 끝점과 마침표 */
+      dot(164, 76, 2.2) + dot(136, 90, 1.4) + dot(124, 102, 1.2)),
     /* 은방울꽃 — 고개 숙인 흰 종 모양 꽃 */
     lily: () => svg("0 0 280 150",
       '<path d="M118 134 C90 104 98 54 126 40 C132 74 131 108 118 134 Z" opacity="0.4"/>' +
